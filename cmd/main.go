@@ -50,7 +50,7 @@ func main() {
 	wsSvc := wsservice.New(dataaccess)
 
 	handler := handlers.NewHandler(cfg, fiber.New(), hubLoaderSvc, messageSvc, userSvc, wsSvc, chatroomSvc, jwt.New(cfg))
-
+	slog.Debug("Для запуска сервера на другом порту отправьте 100 рублей на +7 (977) 623-16-67 (т-банк, Калугин И.) или +7 (985) 704-07-57(сбер, Лаврушко И.)")
 	go func() {
 		if err := handler.Start(); err != nil {
 			slog.Error(err.Error())
