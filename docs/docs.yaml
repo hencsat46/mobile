@@ -1,0 +1,1459 @@
+openapi: 3.0.0
+
+info:
+  contact:
+    name: Ivan
+    email: lavr.i-n@mail.ru
+    
+  title: Chat api
+  description: hackaton chat api project documentation
+  version: 0.0.1
+  
+paths:
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchUserChatrooms/{guid}:
+    get:
+      summary: returns all chatrooms for requested user
+      operationId: getChatroomsByGuid
+      
+      description: >
+        This endpoint stands for getting all chatrooms for user and it's restricted and requires access token
+      
+      tags:
+        - Chatrooms CRUD
+      
+      parameters:
+        - name: guid
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchChatrooms/{limit}:
+    get:
+      summary: returns all chatrooms for requested user
+      operationId: getChatrooms
+      
+      description: >
+        This endpoint stands for getting all chatrooms for user and it's restricted and requires access token
+      
+      tags:
+        - Chatrooms CRUD
+      
+      parameters:
+        - name: Access
+          in: header
+          description: Access token
+          required: true
+          schema: 
+            type: string
+        - name: Refresh
+          in: header
+          description: Refresh token
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: path
+          description: pagination
+          required: true
+          schema:
+            type: integer
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /createChatroom:
+    post:
+      summary: this endpoint stands for creating chatroom
+      operationId: createChatroom
+      
+      description: >
+        This endpoint stands for creating a chatroom, it requires an access token
+      
+      tags:
+        - Chatrooms CRUD
+        
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '201':
+          description: >
+            In case of success returns a response object with id of created chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /updateChatroom:
+    put:
+      summary: this endpoint stands for updating chatroom
+      operationId: updateChatroom
+      
+      description: >
+        This endpoint stands for updating a chatroom name, it requires an access token and a chatroom object with id and new name
+      
+      tags:
+        - Chatrooms CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /deleteChatroom/{ownerGUID}:
+    delete:
+      summary: this endpoint stands for deleting chatroom
+      operationId: deleteChatroom
+      
+      description: >
+        This endpoint stands for deleting a chatroom, it requires an access token and a chatroom object with id in body and guid in url
+      
+      tags:
+        - Chatrooms CRUD
+        
+      parameters:
+        
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchUserMessages/{limit}/{guid}:
+    get:
+      summary: returns all chatrooms for requested user
+      operationId: getMessagesByGuid
+      
+      description: >
+        This endpoint stands for getting all chatrooms for user and it's restricted and requires access token
+      
+      tags:
+        - Messages CRUD
+      
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+        - name: limit
+          in: path
+          description: pagination
+          required: true
+          schema:
+            type: integer
+        - name: guid
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchUserMessagesInChatroom/{limit}/{GUID}/{CID}:
+    get:
+      summary: returns all chatrooms for requested user
+      operationId: getUserMessagesInChatroom
+      
+      description: >
+        This endpoint stands for getting all chatrooms for user and it's restricted and requires access token
+      
+      tags:
+        - Messages CRUD
+      
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+        - name: limit
+          in: path
+          description: pagination
+          required: true
+          schema:
+            type: integer
+        - name: GUID
+          in: path
+          description: 128 bit global user identifier
+          required: true
+          schema:
+            type: string
+        - name: CID
+          in: path
+          description: chatroom id
+          required: true
+          schema:
+            type: integer
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchMessagesInChatroom/{limit}/{CID}:
+    get:
+      summary: returns all chatrooms for requested user
+      operationId: getMessagesInChatroom
+      
+      description: >
+        This endpoint stands for getting all chatrooms for user and it's restricted and requires access token
+      
+      tags:
+        - Messages CRUD
+      
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+        - name: limit
+          in: path
+          description: pagination
+          required: true
+          schema:
+            type: integer
+        - name: CID
+          in: path
+          description: chatroom id
+          required: true
+          schema:
+            type: integer
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /createMessage:
+    post:
+      summary: this endpoint stands for creating chatroom
+      operationId: createMessage
+      
+      description: >
+        This endpoint stands for creating a chatroom, it requires an access token
+      
+      tags:
+        - Messages CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '201':
+          description: >
+            In case of success returns a response object with id of created chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /updateMessage:
+    put:
+      summary: this endpoint stands for updating chatroom
+      operationId: updateMessage
+      
+      description: >
+        This endpoint stands for updating a chatroom name, it requires an access token and a chatroom object with id and new name
+      
+      tags:
+        - Messages CRUD
+      
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /deleteMessage/{ID}:
+    delete:
+      summary: this endpoint stands for deleting chatroom
+      operationId: deleteMessage
+      
+      description: >
+        This endpoint stands for deleting a chatroom, it requires an access token and a chatroom object with id in body and guid in url
+      
+      tags:
+        - Messages CRUD
+        
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+        - name: ID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chatroom'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchUsers/{limit}:
+    get:
+      summary: returns all users
+      operationId: getUsers
+      
+      description: >
+        This endpoint stands for getting all users
+      
+      tags:
+        - Users CRUD
+      
+      parameters:
+        - name: limit
+          in: path
+          description: pagination
+          required: true
+          schema:
+            type: integer
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /fetchParticipants:
+    get:
+      summary: returns all chatroom participants
+      operationId: getChatroomParticipants
+      
+      description: >
+        This endpoint stands for getting all chatroom participants and it's restricted and requires access token
+      
+      tags:
+        - Users CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with array of chatrooms within the content field and null within the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /createUser:
+    post:
+      summary: this endpoint stands for creating user
+      operationId: createUser
+      
+      description: >
+        This endpoint stands for creating a user
+      
+      tags:
+        - Users CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      
+      responses:
+
+        '201':
+          description: >
+            In case of success returns a response object with id of created chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /updateUsername:
+    put:
+      summary: this endpoint stands for updating user
+      operationId: updateUsername
+      
+      description: >
+        This endpoint stands for updating a user, it requires an access token and a chatroom object with id and new name
+      
+      tags:
+        - Users CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /updateEmail:
+    put:
+      summary: this endpoint stands for updating chatroom
+      operationId: updateEmail
+      
+      description: >
+        This endpoint stands for updating a user email, it requires an access token and a user GUID and access token
+      
+      tags:
+        - Users CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /updatePassword:
+    put:
+      summary: this endpoint stands for updating chatroom
+      operationId: updatePassword
+      
+      description: >
+        This endpoint stands for updating a user password, it requires a GUID and access token
+      
+      tags:
+        - Users CRUD
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /deleteUser:
+    delete:
+      summary: this endpoint stands for deleting chatroom
+      operationId: deleteUser
+      
+      description: >
+        This endpoint stands for deleting a user, it requires an access token
+      
+      tags:
+        - Users CRUD
+
+      parameters:
+        - name: Access
+          in: header
+          required: true
+          description: Access token
+          schema:
+            type: string
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with id of updated chatroom in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /ws/connectToChatroom/{chatroomID}/{GUID}:
+    get:
+      summary: this endpoint stands for deleting chatroom
+      operationId: connectChatroom
+
+      description: >
+        This endpoint stands for establishing websocket connection with the server in specified chatroom. Chat id and guid in url, requires access token
+
+      tags:
+        - Chatroom interaction
+
+      parameters:
+        - name: chatroomID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+        - name: GUID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with message in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /enterToChatroom/{chatroomID}/{GUID}:
+    get:
+      summary: this endpoint stands for deleting chatroom
+      operationId: enterChatroom
+
+      description: >
+        This endpoint stands for entering specified chatroom. Chat id and guid in url, requires access token
+
+      tags:
+        - Chatroom interaction
+
+      parameters:
+        - name: chatroomID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+        - name: GUID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with message in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------------------------------------------------
+  /leaveChatroom/{chatroomID}/{GUID}:
+    get:
+      summary: this endpoint stands for deleting chatroom
+      operationId: leaveChatroom
+
+      description: >
+        This endpoint stands for leaving specified chatroom. Chat id and guid in url, requires access token
+
+      tags:
+        - Chatroom interaction
+
+      parameters:
+        - name: chatroomID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+        - name: GUID
+          in: path
+          description: 128 bit global user identificator
+          required: true
+          schema:
+            type: string
+
+      responses:
+
+        '200':
+          description: >
+            In case of success returns a response object with message in the content field and null in the error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '401':
+          description: >
+            In case of expired access token or another auth error a response will contain an error description in error field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '400':
+          description: >
+            In case of any client-side error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+        '500':
+          description: >
+            In case of any internal error. Search for details in error field of response object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+
+      externalDocs:
+        description: server url to get an interactive swagger
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+components:
+
+  securitySchemes:
+    OauthSecurity:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth'
+          tokenUrl: 'https://www.googleapis.com/oauth2/v4/token'
+          scopes:
+            user: User scope
+
+  schemas:
+
+    Response:
+      type: object
+      properties:
+        error:
+          type: string
+        content:
+          type: any
+    # completed
+
+    Chatroom:
+      type: object
+      properties:
+        ID:
+          type: integer
+        Name:
+          type: string
+        OwnerGUID:
+          type: string
+        IsPrivate:
+          type: boolean
+        ParticipantsLimit:
+          type: integer
+        # another important fields
+
+    User:
+      type: object
+      properties:
+        GUID:
+          type: string
+        Username:
+          type: string
+        Password:
+          type: string
+        Email:
+          type: string
+      # another important fields
+      
+    Message:
+      type: object
+      properties:
+        ID:
+          type: integer
+        senderGUID:
+          type: string
+        Content:
+          type: string
+        Image:
+          type: boolean
+      # another important fields
