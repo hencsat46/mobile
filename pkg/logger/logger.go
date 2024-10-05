@@ -29,7 +29,7 @@ func New(cfg *config.Config) *Logger {
 
 		return log
 	} else {
-		log.Fatal("choose the environment")
+		log.Fatal("choose the environment: \"dev\" or \"prod\"")
 	}
 
 	return nil

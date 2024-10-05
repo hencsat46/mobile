@@ -14,7 +14,7 @@ type Config struct {
 	Environment string `yaml:"env"`
 	JWTsecret   string `yaml:"secretKey"`
 	ExpTime     int    `yaml:"expTime"`
-	Port        string `yaml:"port"`
+	Port        string
 	Addr        string `yaml:"host"`
 	Mongo       string `yaml:"database"`
 }
@@ -58,6 +58,8 @@ func NewYaml(configPath string) (*Config, error) {
 		slog.Error(err.Error())
 		return nil, err
 	}
+
+	config.Port = "3000"
 
 	return config, nil
 }
