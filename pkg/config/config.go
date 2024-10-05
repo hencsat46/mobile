@@ -7,15 +7,16 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
+	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
-	Environment string
-	JWTsecret   string
-	ExpTime     int
-	Port        string
-	Addr        string
-	Mongo       string
+	Environment string `yaml:"env"`
+	JWTsecret   string `yaml:"secretKey"`
+	ExpTime     int    `yaml:"expTime"`
+	Port        string `yaml:"port"`
+	Addr        string `yaml:"host"`
+	Mongo       string `yaml:"database"`
 }
 
 func New() *Config {
@@ -38,4 +39,25 @@ func New() *Config {
 		Addr:        os.Getenv("ADDR"),
 		Mongo:       os.Getenv("MONGO"),
 	}
+}
+
+func NewYaml(configPath string) (*Config, error) {
+	config := &Config{}
+
+	file, err := os.Open(configPath)
+
+	if err != nil {
+		slog.Error(err.Error())
+		return nil, err
+	}
+	defer file.Close()
+
+	decoder := yaml.NewDecoder(file)
+
+	if err := decoder.Decode(&config); err != nil {
+		slog.Error(err.Error())
+		return nil, err
+	}
+
+	return config, nil
 }

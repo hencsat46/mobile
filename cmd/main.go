@@ -26,7 +26,12 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.TODO(), os.Interrupt)
 	defer cancel()
 
-	cfg := config.New()
+	//cfg := config.New()
+	cfg, err := config.NewYaml("./pkg/config/config.yaml")
+	if err != nil {
+		slog.Error(err.Error())
+		os.Exit(1)
+	}
 	logger := logger.New(cfg)
 	logger.SetAsDefault()
 

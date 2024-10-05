@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  chat-server:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo-database
+
+  mongo-database:
+    image: mongodb/mongodb-community-server
+    ports:
+      - 27017:27017
+    volumes:
+      - mongod:/data/db
+
+volumes:
+  mongod:
