@@ -27,7 +27,7 @@ func main() {
 	defer cancel()
 
 	//cfg := config.New()
-	cfg, err := config.NewYaml("./pkg/config/config.yaml")
+	cfg, err := config.NewYaml("./config.yaml")
 	if err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
