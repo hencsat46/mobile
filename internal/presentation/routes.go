@@ -8,10 +8,11 @@ import (
 	e "hackathon/exceptions"
 	"hackathon/internal/presentation/entities"
 
+	_ "hackathon/docs"
+
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
-	fiberSwagger "github.com/swaggo/fiber-swagger"
-	_ "github.com/swaggo/fiber-swagger/example/docs"
+	"github.com/gofiber/swagger"
 )
 
 func (h *HTTPhandler) bindRoutesAndMiddlewares() {
@@ -50,7 +51,7 @@ func (h *HTTPhandler) bindRoutesAndMiddlewares() {
 		return nil
 	})
 
-	h.app.Get("/swagger/*", fiberSwagger.WrapHandler)
+	h.app.Get("/swagger/*", swagger.HandlerDefault)
 
 	userRoutes := h.app.Group("/user")
 	chatroomRoutes := h.app.Group("/chatroom")

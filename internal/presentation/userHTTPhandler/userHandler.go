@@ -41,6 +41,16 @@ func New(userService IBusinessUser, jwt *jwt.JWT) *UserHandler {
 	}
 }
 
+// CreateUser godoc
+// @Summary Создание пользователя
+// @Description GUID нужно сохранить, нужен будет для всего
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UserDTO true "User Data"
+// @Success 201 {object} entities.Response "User created successfully"
+// @Failure 400 {object} entities.Response "Invalid input or user creation failed"
+// @Router /users/create [post]
 func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -77,6 +87,16 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 	})
 }
 
+// Login godoc
+// @Summary Авторизация пользователя
+// @Description Возвращает токен, который нужно сохранить
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UserDTO true "User Data"
+// @Success 201 {object} entities.Response "User created successfully"
+// @Failure 400 {object} entities.Response "Invalid input or user creation failed"
+// @Router /users/login [post]
 func (h *UserHandler) Login(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -111,17 +131,21 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 	token := h.jwtMiddleware.CreateToken(guid)
 
 	return c.Status(http.StatusOK).JSON(entities.Response{
-		Error: "",
-		Content: struct {
-			GUID  string `json:"guid"`
-			Token string `json:"token"`
-		}{
-			GUID:  guid,
-			Token: token,
-		},
+		Error:   "",
+		Content: token,
 	})
 }
 
+// UpdateUsername godoc
+// @Summary Обновление юзернейма пользователя
+// @Description
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UserDTO true "User Data"
+// @Success 201 {object} entities.Response "Username updated successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/updateUsername [put]
 func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -151,6 +175,16 @@ func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 	})
 }
 
+// UpdateEmail godoc
+// @Summary Обновление почты пользователя
+// @Description
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UserDTO true "User Data"
+// @Success 201 {object} entities.Response "Email updated successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/updateEmail [put]
 func (h *UserHandler) UpdateEmail(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -180,6 +214,16 @@ func (h *UserHandler) UpdateEmail(c *fiber.Ctx) error {
 	})
 }
 
+// UpdatePassword godoc
+// @Summary Обновление пароля пользователя
+// @Description
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UpdatePasswordDTO true "User Data"
+// @Success 201 {object} entities.Response "Password updated successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/updatePassword [put]
 func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 	var request entities.UpdatePasswordDTO
 
@@ -215,6 +259,16 @@ func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 	})
 }
 
+// DeleteUser godoc
+// @Summary Удаление юзера
+// @Description
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entities.UserDTO true "User Data"
+// @Success 201 {object} entities.Response "User deleted successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/delete/{GUID} [delete]
 func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 	guid := c.Params("GUID")
 	slog.Debug(fmt.Sprintf("delete user endpoint called: %v", guid))
@@ -236,6 +290,15 @@ func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 	})
 }
 
+// FetchUserChatrooms godoc
+// @Summary Получить список чатов пользователя
+// @Description Возвращает список чатов пользователя
+// @Tags users
+// @Produce json
+// @Param guid query string true "GUID пользователя"
+// @Success 200 {object} entities.Response{content=[]models.Chatroom} "Успешный ответ с массивом комнат"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/chatrooms/{guid} [get]
 func (h *UserHandler) FetchUserChatrooms(c *fiber.Ctx) error {
 	guid := c.Params("guid")
 
@@ -271,6 +334,17 @@ func (h *UserHandler) FetchUserChatrooms(c *fiber.Ctx) error {
 	})
 }
 
+// EnterChatroom godoc
+// @Summary Вход в чат
+// @Description
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param guid query string true "GUID пользователя"
+// @Param cid query string true "ID чата"
+// @Success 201 {object} entities.Response "entered"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/enterChatroom/{cid}/{guid} [get]
 func (h *UserHandler) EnterChatroom(c *fiber.Ctx) error {
 	cid := c.Params("cid")
 	guid := c.Params("guid")
@@ -293,6 +367,16 @@ func (h *UserHandler) EnterChatroom(c *fiber.Ctx) error {
 	})
 }
 
+// ExitChatroom godoc
+// @Summary Выход из чата
+// @Description
+// @Tags users
+// @Produce json
+// @Param guid query string true "GUID пользователя"
+// @Param cid query string true "ID чата"
+// @Success 201 {object} entities.Response "Exited successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /users/exitChatroom/{cid}/{guid} [get]
 func (h *UserHandler) ExitChatroom(c *fiber.Ctx) error {
 	cid := c.Params("cid")
 	guid := c.Params("guid")

@@ -22,6 +22,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// @title Fiber Example API
+// @version 1.0
+// @description This is a sample swagger for Fiber
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email fiber@swagger.io
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8080
+// @BasePath /
 func main() {
 	ctx, cancel := signal.NotifyContext(context.TODO(), os.Interrupt)
 	defer cancel()
@@ -50,7 +60,7 @@ func main() {
 	wsSvc := wsservice.New(dataaccess)
 
 	handler := handlers.NewHandler(cfg, fiber.New(), hubLoaderSvc, messageSvc, userSvc, wsSvc, chatroomSvc, jwt.New(cfg))
-	slog.Debug("Для запуска сервера на другом порту отправьте 100 рублей на +7 (977) 623-16-67 (т-банк, Калугин И.) или +7 (985) 704-07-57(сбер, Лаврушко И.)")
+	slog.Debug("Для запуска сервера на другом порту отправьте 10000 рублей на +7 (977) 623-16-67 (т-банк, Калугин И.) или +7 (985) 704-07-57(сбер, Лаврушко И.)")
 	go func() {
 		if err := handler.Start(); err != nil {
 			slog.Error(err.Error())

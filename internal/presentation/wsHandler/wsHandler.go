@@ -33,6 +33,14 @@ func New(wsBusiness IBusinessWS, hubmngr *hubmanager.HubManager, msgBusiness mes
 	}
 }
 
+// @Summary WebSocket соединение для общения
+// @Description Обновляет соединение до WebSocket'а для передачи сообщений.
+// @Tags websocket
+// @Param GUID path string true "Уникальный идентификатор пользователя"
+// @Param cid path string true "Уникальный идентификатор чата"
+// @Success 101 {string} string "Соединение обновлено до WebSocket"
+// @Failure 400 {object} entities.Response "Неверные параметры запроса"
+// @Router /{GUID}/{cid} [get]
 func (h *WSHandler) HandleWS(c *websocket.Conn) {
 	guid := c.Params("GUID")
 	cid := c.Params("cid")

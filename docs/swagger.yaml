@@ -1,4 +1,317 @@
+basePath: /
+definitions:
+  entities.Response:
+    properties:
+      content: {}
+      error:
+        type: string
+    type: object
+  entities.UpdatePasswordDTO:
+    properties:
+      guid:
+        type: string
+      old_password:
+        type: string
+      password:
+        type: string
+    type: object
+  entities.UserDTO:
+    properties:
+      email:
+        type: string
+      guid:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Chatroom:
+    properties:
+      chatroomId:
+        type: string
+      isPrivate:
+        type: boolean
+      name:
+        type: string
+      ownerGUID:
+        type: string
+    type: object
+host: localhost:8080
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /{GUID}/{cid}:
+    get:
+      description: Обновляет соединение до WebSocket'а для передачи сообщений.
+      parameters:
+      - description: Уникальный идентификатор пользователя
+        in: path
+        name: GUID
+        required: true
+        type: string
+      - description: Уникальный идентификатор чата
+        in: path
+        name: cid
+        required: true
+        type: string
+      responses:
+        "101":
+          description: Соединение обновлено до WebSocket
+          schema:
+            type: string
+        "400":
+          description: Неверные параметры запроса
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: WebSocket соединение для общения
+      tags:
+      - websocket
+  /users/chatrooms/{guid}:
+    get:
+      description: Возвращает список чатов пользователя
+      parameters:
+      - description: GUID пользователя
+        in: query
+        name: guid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с массивом комнат
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Response'
+            - properties:
+                content:
+                  items:
+                    $ref: '#/definitions/models.Chatroom'
+                  type: array
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Получить список чатов пользователя
+      tags:
+      - users
+  /users/create:
+    post:
+      consumes:
+      - application/json
+      description: GUID нужно сохранить, нужен будет для всего
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Invalid input or user creation failed
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Создание пользователя
+      tags:
+      - users
+  /users/delete/{GUID}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User deleted successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Удаление юзера
+      tags:
+      - users
+  /users/enterChatroom/{cid}/{guid}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: GUID пользователя
+        in: query
+        name: guid
+        required: true
+        type: string
+      - description: ID чата
+        in: query
+        name: cid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: entered
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Вход в чат
+      tags:
+      - users
+  /users/exitChatroom/{cid}/{guid}:
+    get:
+      parameters:
+      - description: GUID пользователя
+        in: query
+        name: guid
+        required: true
+        type: string
+      - description: ID чата
+        in: query
+        name: cid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Exited successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Выход из чата
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Возвращает токен, который нужно сохранить
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Invalid input or user creation failed
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Авторизация пользователя
+      tags:
+      - users
+  /users/updateEmail:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Email updated successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Обновление почты пользователя
+      tags:
+      - users
+  /users/updatePassword:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UpdatePasswordDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Password updated successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Обновление пароля пользователя
+      tags:
+      - users
+  /users/updateUsername:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Username updated successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Обновление юзернейма пользователя
+      tags:
+      - users
 swagger: "2.0"
