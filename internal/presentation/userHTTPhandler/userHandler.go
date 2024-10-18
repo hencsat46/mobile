@@ -50,7 +50,7 @@ func New(userService IBusinessUser, jwt *jwt.JWT) *UserHandler {
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "User created successfully"
 // @Failure 400 {object} entities.Response "Invalid input or user creation failed"
-// @Router /users/create [post]
+// @Router /user/create [post]
 func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -96,7 +96,7 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "User created successfully"
 // @Failure 400 {object} entities.Response "Invalid input or user creation failed"
-// @Router /users/login [post]
+// @Router /user/login [post]
 func (h *UserHandler) Login(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -145,7 +145,7 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "Username updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/updateUsername [put]
+// @Router /user/updateUsername [put]
 func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -184,7 +184,7 @@ func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "Email updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/updateEmail [put]
+// @Router /user/updateEmail [put]
 func (h *UserHandler) UpdateEmail(c *fiber.Ctx) error {
 	var request entities.UserDTO
 
@@ -223,7 +223,7 @@ func (h *UserHandler) UpdateEmail(c *fiber.Ctx) error {
 // @Param user body entities.UpdatePasswordDTO true "User Data"
 // @Success 201 {object} entities.Response "Password updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/updatePassword [put]
+// @Router /user/updatePassword [put]
 func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 	var request entities.UpdatePasswordDTO
 
@@ -268,7 +268,7 @@ func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "User deleted successfully"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/delete/{GUID} [delete]
+// @Router /user/delete/{GUID} [delete]
 func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 	guid := c.Params("GUID")
 	slog.Debug(fmt.Sprintf("delete user endpoint called: %v", guid))
@@ -298,7 +298,7 @@ func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 // @Param guid query string true "GUID пользователя"
 // @Success 200 {object} entities.Response{content=[]models.Chatroom} "Успешный ответ с массивом комнат"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/chatrooms/{guid} [get]
+// @Router /user/chatrooms/{guid} [get]
 func (h *UserHandler) FetchUserChatrooms(c *fiber.Ctx) error {
 	guid := c.Params("guid")
 
@@ -344,7 +344,7 @@ func (h *UserHandler) FetchUserChatrooms(c *fiber.Ctx) error {
 // @Param cid query string true "ID чата"
 // @Success 201 {object} entities.Response "entered"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/enterChatroom/{cid}/{guid} [get]
+// @Router /user/enterChatroom/{cid}/{guid} [get]
 func (h *UserHandler) EnterChatroom(c *fiber.Ctx) error {
 	cid := c.Params("cid")
 	guid := c.Params("guid")
@@ -376,7 +376,7 @@ func (h *UserHandler) EnterChatroom(c *fiber.Ctx) error {
 // @Param cid query string true "ID чата"
 // @Success 201 {object} entities.Response "Exited successfully"
 // @Failure 400 {object} entities.Response "Bad request"
-// @Router /users/exitChatroom/{cid}/{guid} [get]
+// @Router /user/exitChatroom/{cid}/{guid} [get]
 func (h *UserHandler) ExitChatroom(c *fiber.Ctx) error {
 	cid := c.Params("cid")
 	guid := c.Params("guid")

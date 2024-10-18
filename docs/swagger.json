@@ -14,10 +14,10 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:3000",
     "basePath": "/",
     "paths": {
-        "/users/chatrooms/{guid}": {
+        "/user/chatrooms/{guid}": {
             "get": {
                 "description": "Возвращает список чатов пользователя",
                 "produces": [
@@ -67,7 +67,7 @@
                 }
             }
         },
-        "/users/create": {
+        "/user/create": {
             "post": {
                 "description": "GUID нужно сохранить, нужен будет для всего",
                 "consumes": [
@@ -107,7 +107,7 @@
                 }
             }
         },
-        "/users/delete/{GUID}": {
+        "/user/delete/{GUID}": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -146,7 +146,7 @@
                 }
             }
         },
-        "/users/enterChatroom/{cid}/{guid}": {
+        "/user/enterChatroom/{cid}/{guid}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -190,7 +190,7 @@
                 }
             }
         },
-        "/users/exitChatroom/{cid}/{guid}": {
+        "/user/exitChatroom/{cid}/{guid}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -231,7 +231,7 @@
                 }
             }
         },
-        "/users/login": {
+        "/user/login": {
             "post": {
                 "description": "Возвращает токен, который нужно сохранить",
                 "consumes": [
@@ -271,7 +271,7 @@
                 }
             }
         },
-        "/users/updateEmail": {
+        "/user/updateEmail": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -310,7 +310,7 @@
                 }
             }
         },
-        "/users/updatePassword": {
+        "/user/updatePassword": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -349,7 +349,7 @@
                 }
             }
         },
-        "/users/updateUsername": {
+        "/user/updateUsername": {
             "put": {
                 "consumes": [
                     "application/json"

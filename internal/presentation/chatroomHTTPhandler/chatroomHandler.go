@@ -37,6 +37,14 @@ func New(hubmngr *hubmanager.HubManager, chatroomBusiness IBusinessChatroom) *Ch
 	}
 }
 
+// GetChatroom godoc
+// @Summary Получить все чаты
+// @Description хз зачем, просто чтобы был список
+// @Tags chatrooms
+// @Produce json
+// @Success 200 {object} entities.Response{content=[]models.Chatroom} "Успешный ответ с массивом комнат"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /chatroom/get [get]
 func (h *ChatroomHandler) GetChatroom(c *fiber.Ctx) error {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*5)
 	defer cancel()
@@ -57,6 +65,16 @@ func (h *ChatroomHandler) GetChatroom(c *fiber.Ctx) error {
 
 }
 
+// CreateChatroom godoc
+// @Summary Создать чат
+// @Description Создание чата
+// @Tags chatrooms
+// @Accept json
+// @Produce json
+// @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
+// @Success 201 {object} entities.Response "Chatroom created successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /chatroom/create [post]
 func (h *ChatroomHandler) CreateChatroom(c *fiber.Ctx) error {
 	var request entities.ChatroomDTO
 
@@ -100,6 +118,16 @@ func (h *ChatroomHandler) CreateChatroom(c *fiber.Ctx) error {
 	})
 }
 
+// UpdateChatroom godoc
+// @Summary Обновить чат
+// @Description Обновление чата
+// @Tags chatrooms
+// @Accept json
+// @Produce json
+// @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
+// @Success 200 {object} entities.Response "Chatroom updated successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /chatroom/ [put]
 func (h *ChatroomHandler) UpdateChatroom(c *fiber.Ctx) error {
 	var request entities.ChatroomDTO
 
@@ -135,6 +163,15 @@ func (h *ChatroomHandler) UpdateChatroom(c *fiber.Ctx) error {
 	})
 }
 
+// DeleteChatroom godoc
+// @Summary Удалить чат
+// @Description Удаление чата
+// @Tags chatrooms
+// @Param guid query string true "GUID пользователя"
+// @Param cid query string true "ID чата"
+// @Success 200 {object} entities.Response "Chatroom deleted successfully"
+// @Failure 400 {object} entities.Response "Bad request"
+// @Router /chatroom/{chatroomID}/{GUID} [delete]
 func (h *ChatroomHandler) DeleteChatroom(c *fiber.Ctx) error {
 	chatroomID := c.Params("chatroomID")
 	ownerGUID := c.Params("GUID")

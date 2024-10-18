@@ -23,7 +23,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/users/chatrooms/{guid}": {
+        "/user/chatrooms/{guid}": {
             "get": {
                 "description": "Возвращает список чатов пользователя",
                 "produces": [
@@ -73,7 +73,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/create": {
+        "/user/create": {
             "post": {
                 "description": "GUID нужно сохранить, нужен будет для всего",
                 "consumes": [
@@ -113,7 +113,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/delete/{GUID}": {
+        "/user/delete/{GUID}": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -152,7 +152,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/enterChatroom/{cid}/{guid}": {
+        "/user/enterChatroom/{cid}/{guid}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -196,7 +196,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/exitChatroom/{cid}/{guid}": {
+        "/user/exitChatroom/{cid}/{guid}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -237,7 +237,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/login": {
+        "/user/login": {
             "post": {
                 "description": "Возвращает токен, который нужно сохранить",
                 "consumes": [
@@ -277,7 +277,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/updateEmail": {
+        "/user/updateEmail": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -316,7 +316,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/updatePassword": {
+        "/user/updatePassword": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -355,7 +355,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/users/updateUsername": {
+        "/user/updateUsername": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -498,7 +498,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:3000",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Fiber Example API",

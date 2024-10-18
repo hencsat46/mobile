@@ -37,7 +37,7 @@ definitions:
       ownerGUID:
         type: string
     type: object
-host: localhost:8080
+host: localhost:3000
 info:
   contact:
     email: fiber@swagger.io
@@ -76,7 +76,7 @@ paths:
       summary: WebSocket соединение для общения
       tags:
       - websocket
-  /users/chatrooms/{guid}:
+  /user/chatrooms/{guid}:
     get:
       description: Возвращает список чатов пользователя
       parameters:
@@ -106,7 +106,7 @@ paths:
       summary: Получить список чатов пользователя
       tags:
       - users
-  /users/create:
+  /user/create:
     post:
       consumes:
       - application/json
@@ -132,7 +132,7 @@ paths:
       summary: Создание пользователя
       tags:
       - users
-  /users/delete/{GUID}:
+  /user/delete/{GUID}:
     delete:
       consumes:
       - application/json
@@ -157,7 +157,7 @@ paths:
       summary: Удаление юзера
       tags:
       - users
-  /users/enterChatroom/{cid}/{guid}:
+  /user/enterChatroom/{cid}/{guid}:
     get:
       consumes:
       - application/json
@@ -186,7 +186,7 @@ paths:
       summary: Вход в чат
       tags:
       - users
-  /users/exitChatroom/{cid}/{guid}:
+  /user/exitChatroom/{cid}/{guid}:
     get:
       parameters:
       - description: GUID пользователя
@@ -213,7 +213,7 @@ paths:
       summary: Выход из чата
       tags:
       - users
-  /users/login:
+  /user/login:
     post:
       consumes:
       - application/json
@@ -239,7 +239,7 @@ paths:
       summary: Авторизация пользователя
       tags:
       - users
-  /users/updateEmail:
+  /user/updateEmail:
     put:
       consumes:
       - application/json
@@ -264,7 +264,7 @@ paths:
       summary: Обновление почты пользователя
       tags:
       - users
-  /users/updatePassword:
+  /user/updatePassword:
     put:
       consumes:
       - application/json
@@ -289,7 +289,7 @@ paths:
       summary: Обновление пароля пользователя
       tags:
       - users
-  /users/updateUsername:
+  /user/updateUsername:
     put:
       consumes:
       - application/json
