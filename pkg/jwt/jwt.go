@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"fmt"
 	"log/slog"
 	"net/http"
 	"time"
@@ -24,13 +25,15 @@ type JWT struct {
 }
 
 func New(cfg *config.Config) *JWT {
+	fmt.Println(cfg.ExpTime)
 	return &JWT{
 		secret:  cfg.JWTsecret,
-		expTime: time.Duration(cfg.ExpTime) * time.Second,
+		expTime: time.Duration(cfg.ExpTime) * time.Minute,
 	}
 }
 
 func (j *JWT) CreateToken(guid string) string {
+	fmt.Println(j.expTime)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
 		"guid": guid,
 		"exp":  time.Now().Add(j.expTime).Unix(),

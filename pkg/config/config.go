@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"log/slog"
 	"os"
@@ -60,6 +61,8 @@ func NewYaml(configPath string) (*Config, error) {
 	}
 
 	config.Port = "3000"
+
+	fmt.Println(config)
 
 	return config, nil
 }

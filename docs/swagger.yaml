@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  entities.ChatroomDTO:
+    properties:
+      chatroom_id:
+        type: string
+      guid:
+        type: string
+      is_private:
+        type: boolean
+      name:
+        type: string
+      participants_limit:
+        type: integer
+    type: object
   entities.Response:
     properties:
       content: {}
@@ -76,6 +89,108 @@ paths:
       summary: WebSocket соединение для общения
       tags:
       - websocket
+  /chatroom/:
+    put:
+      consumes:
+      - application/json
+      description: Обновление чата
+      parameters:
+      - description: Chatroom Data
+        in: body
+        name: chatroom
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ChatroomDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Chatroom updated successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Обновить чат
+      tags:
+      - chatrooms
+  /chatroom/{chatroomID}/{GUID}:
+    delete:
+      description: Удаление чата
+      parameters:
+      - description: GUID пользователя
+        in: query
+        name: guid
+        required: true
+        type: string
+      - description: ID чата
+        in: query
+        name: cid
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Chatroom deleted successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Удалить чат
+      tags:
+      - chatrooms
+  /chatroom/create:
+    post:
+      consumes:
+      - application/json
+      description: Создание чата
+      parameters:
+      - description: Chatroom Data
+        in: body
+        name: chatroom
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ChatroomDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Chatroom created successfully
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Создать чат
+      tags:
+      - chatrooms
+  /chatroom/get:
+    get:
+      description: хз зачем, просто чтобы был список
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с массивом комнат
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Response'
+            - properties:
+                content:
+                  items:
+                    $ref: '#/definitions/models.Chatroom'
+                  type: array
+              type: object
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Получить все чаты
+      tags:
+      - chatrooms
   /user/chatrooms/{guid}:
     get:
       description: Возвращает список чатов пользователя

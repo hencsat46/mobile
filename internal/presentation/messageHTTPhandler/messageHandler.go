@@ -33,6 +33,16 @@ func New(messageBusiness IBusinessMessage) *MessageHandler {
 	}
 }
 
+// FetchMessagesForChatroom godoc
+// @Summary Список сообщений для чата
+// @Description Выводит все сообщения чата
+// @Param Authorization header string true "Bearer token"
+// @Tags messages
+// @Produce json
+// @Param cid path string true "ID чата"
+// @Success 200 {object} entities.Response
+// @Failure 400 {object} entities.Response
+// @Router /message/{cid} [get]
 func (h *MessageHandler) FetchMessagesForChatroom(c *fiber.Ctx) error {
 	chatroomId := c.Params("cid")
 	slog.Debug(fmt.Sprintf("fetch chatroom messages endpoint called: %v", chatroomId))

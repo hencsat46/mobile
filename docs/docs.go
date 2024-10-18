@@ -23,6 +23,166 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/chatroom/": {
+            "put": {
+                "description": "Обновление чата",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chatrooms"
+                ],
+                "summary": "Обновить чат",
+                "parameters": [
+                    {
+                        "description": "Chatroom Data",
+                        "name": "chatroom",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.ChatroomDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chatroom updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/chatroom/create": {
+            "post": {
+                "description": "Создание чата",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chatrooms"
+                ],
+                "summary": "Создать чат",
+                "parameters": [
+                    {
+                        "description": "Chatroom Data",
+                        "name": "chatroom",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.ChatroomDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Chatroom created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/chatroom/get": {
+            "get": {
+                "description": "хз зачем, просто чтобы был список",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chatrooms"
+                ],
+                "summary": "Получить все чаты",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ с массивом комнат",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/entities.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "content": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.Chatroom"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/chatroom/{chatroomID}/{GUID}": {
+            "delete": {
+                "description": "Удаление чата",
+                "tags": [
+                    "chatrooms"
+                ],
+                "summary": "Удалить чат",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "GUID пользователя",
+                        "name": "guid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID чата",
+                        "name": "cid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chatroom deleted successfully",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/entities.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/user/chatrooms/{guid}": {
             "get": {
                 "description": "Возвращает список чатов пользователя",
@@ -435,6 +595,26 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "entities.ChatroomDTO": {
+            "type": "object",
+            "properties": {
+                "chatroom_id": {
+                    "type": "string"
+                },
+                "guid": {
+                    "type": "string"
+                },
+                "is_private": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "participants_limit": {
+                    "type": "integer"
+                }
+            }
+        },
         "entities.Response": {
             "type": "object",
             "properties": {
