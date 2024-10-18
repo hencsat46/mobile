@@ -191,6 +191,34 @@ paths:
       summary: Получить все чаты
       tags:
       - chatrooms
+  /message/{cid}:
+    get:
+      description: Выводит все сообщения чата
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID чата
+        in: path
+        name: cid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: Список сообщений для чата
+      tags:
+      - messages
   /user/chatrooms/{guid}:
     get:
       description: Возвращает список чатов пользователя
