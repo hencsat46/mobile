@@ -42,6 +42,7 @@ func New(hubmngr *hubmanager.HubManager, chatroomBusiness IBusinessChatroom) *Ch
 // @Description хз зачем, просто чтобы был список
 // @Tags chatrooms
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Success 200 {object} entities.Response{content=[]models.Chatroom} "Успешный ответ с массивом комнат"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /chatroom/get [get]
@@ -71,6 +72,7 @@ func (h *ChatroomHandler) GetChatroom(c *fiber.Ctx) error {
 // @Tags chatrooms
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
 // @Success 201 {object} entities.Response "Chatroom created successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -124,6 +126,7 @@ func (h *ChatroomHandler) CreateChatroom(c *fiber.Ctx) error {
 // @Tags chatrooms
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
 // @Success 200 {object} entities.Response "Chatroom updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -167,6 +170,7 @@ func (h *ChatroomHandler) UpdateChatroom(c *fiber.Ctx) error {
 // @Summary Удалить чат
 // @Description Удаление чата
 // @Tags chatrooms
+// @Param Authorization header string true "Bearer token"
 // @Param guid query string true "GUID пользователя"
 // @Param cid query string true "ID чата"
 // @Success 200 {object} entities.Response "Chatroom deleted successfully"

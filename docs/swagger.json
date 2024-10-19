@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample swagger for Fiber",
-        "title": "Fiber Example API",
+        "description": "Бек делали Лаврушко Иван и Калугин Илья",
+        "title": "Абоба",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
@@ -31,6 +31,13 @@
                 ],
                 "summary": "Обновить чат",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Chatroom Data",
                         "name": "chatroom",
@@ -72,6 +79,13 @@
                 "summary": "Создать чат",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Chatroom Data",
                         "name": "chatroom",
                         "in": "body",
@@ -107,6 +121,15 @@
                     "chatrooms"
                 ],
                 "summary": "Получить все чаты",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Успешный ответ с массивом комнат",
@@ -146,6 +169,13 @@
                 ],
                 "summary": "Удалить чат",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -230,6 +260,13 @@
                 ],
                 "summary": "Получить список чатов пользователя",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -323,6 +360,13 @@
                 "summary": "Удаление юзера",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -361,6 +405,13 @@
                 ],
                 "summary": "Вход в чат",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -402,6 +453,13 @@
                 ],
                 "summary": "Выход из чата",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -487,6 +545,13 @@
                 "summary": "Обновление почты пользователя",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -526,6 +591,13 @@
                 "summary": "Обновление пароля пользователя",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -564,6 +636,13 @@
                 ],
                 "summary": "Обновление юзернейма пользователя",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "User Data",
                         "name": "user",

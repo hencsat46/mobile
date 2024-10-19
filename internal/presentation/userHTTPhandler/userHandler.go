@@ -142,6 +142,7 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "Username updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -181,6 +182,7 @@ func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "Email updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -220,6 +222,7 @@ func (h *UserHandler) UpdateEmail(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param user body entities.UpdatePasswordDTO true "User Data"
 // @Success 201 {object} entities.Response "Password updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -265,6 +268,7 @@ func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "User deleted successfully"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -295,6 +299,7 @@ func (h *UserHandler) DeleteUser(c *fiber.Ctx) error {
 // @Description Возвращает список чатов пользователя
 // @Tags users
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param guid query string true "GUID пользователя"
 // @Success 200 {object} entities.Response{content=[]models.Chatroom} "Успешный ответ с массивом комнат"
 // @Failure 400 {object} entities.Response "Bad request"
@@ -340,6 +345,7 @@ func (h *UserHandler) FetchUserChatrooms(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param guid query string true "GUID пользователя"
 // @Param cid query string true "ID чата"
 // @Success 201 {object} entities.Response "entered"
@@ -372,6 +378,7 @@ func (h *UserHandler) EnterChatroom(c *fiber.Ctx) error {
 // @Description
 // @Tags users
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param guid query string true "GUID пользователя"
 // @Param cid query string true "ID чата"
 // @Success 201 {object} entities.Response "Exited successfully"

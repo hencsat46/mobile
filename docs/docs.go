@@ -38,6 +38,13 @@ const docTemplate = `{
                 "summary": "Обновить чат",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Chatroom Data",
                         "name": "chatroom",
                         "in": "body",
@@ -78,6 +85,13 @@ const docTemplate = `{
                 "summary": "Создать чат",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Chatroom Data",
                         "name": "chatroom",
                         "in": "body",
@@ -113,6 +127,15 @@ const docTemplate = `{
                     "chatrooms"
                 ],
                 "summary": "Получить все чаты",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Успешный ответ с массивом комнат",
@@ -152,6 +175,13 @@ const docTemplate = `{
                 ],
                 "summary": "Удалить чат",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -236,6 +266,13 @@ const docTemplate = `{
                 ],
                 "summary": "Получить список чатов пользователя",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -329,6 +366,13 @@ const docTemplate = `{
                 "summary": "Удаление юзера",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -367,6 +411,13 @@ const docTemplate = `{
                 ],
                 "summary": "Вход в чат",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -408,6 +459,13 @@ const docTemplate = `{
                 ],
                 "summary": "Выход из чата",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "GUID пользователя",
@@ -493,6 +551,13 @@ const docTemplate = `{
                 "summary": "Обновление почты пользователя",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -532,6 +597,13 @@ const docTemplate = `{
                 "summary": "Обновление пароля пользователя",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User Data",
                         "name": "user",
                         "in": "body",
@@ -570,6 +642,13 @@ const docTemplate = `{
                 ],
                 "summary": "Обновление юзернейма пользователя",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "User Data",
                         "name": "user",
@@ -723,8 +802,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:3000",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Fiber Example API",
-	Description:      "This is a sample swagger for Fiber",
+	Title:            "Абоба",
+	Description:      "Бек делали Лаврушко Иван и Калугин Илья",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

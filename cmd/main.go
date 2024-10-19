@@ -22,9 +22,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// @title Fiber Example API
+// @title Абоба
 // @version 1.0
-// @description This is a sample swagger for Fiber
+// @description Бек делали Лаврушко Иван и Калугин Илья
 // @termsOfService http://swagger.io/terms/
 // @contact.name API Support
 // @contact.email fiber@swagger.io
