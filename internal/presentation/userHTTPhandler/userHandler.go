@@ -61,6 +61,13 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 			Content: nil,
 		})
 	}
+
+	if request.Username == "" || request.Password == "" {
+		return c.Status(http.StatusBadRequest).JSON(entities.Response{
+			Error:   e.ErrBadRequest.Error(),
+			Content: nil,
+		})
+	}
 	slog.Debug(fmt.Sprintf("create user endpoint called: %v", request))
 
 	user := models.User{

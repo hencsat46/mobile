@@ -19,6 +19,12 @@ type Response struct {
 	Content any    `json:"content"`
 }
 
+type customClaims struct {
+	jwt.RegisteredClaims
+	expTime int64
+	guid    string
+}
+
 type JWT struct {
 	secret  string
 	expTime time.Duration
@@ -34,9 +40,9 @@ func New(cfg *config.Config) *JWT {
 
 func (j *JWT) CreateToken(guid string) string {
 	fmt.Println(j.expTime)
-	token := jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
-		"guid": guid,
-		"exp":  time.Now().Add(j.expTime).Unix(),
+	token := jwt.NewWithClaims(jwt.SigningMethodHS512, customClaims{
+		guid:    guid,
+		expTime: time.Now().Add(j.expTime).Unix(),
 	})
 
 	stringToken, err := token.SignedString([]byte(j.secret))
@@ -74,6 +80,7 @@ func (j *JWT) ValidateToken(next fiber.Handler) fiber.Handler {
 				Content: nil,
 			})
 		} else if !token.Valid {
+
 			return c.Status(http.StatusUnauthorized).JSON(Response{
 				Error:   e.ErrInvalidToken.Error(),
 				Content: nil,
@@ -82,4 +89,19 @@ func (j *JWT) ValidateToken(next fiber.Handler) fiber.Handler {
 
 		return next(c)
 	}
+}
+
+func (j *JWT) GetGUID(tokenString string) (string, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &customClaims{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte("All ok"), nil
+	})
+
+	if err != nil {
+		slog.Error(err.Error())
+		return "", err
+	}
+
+	claims, _ := token.Claims.(*customClaims)
+
+	return claims.guid, nil
 }
