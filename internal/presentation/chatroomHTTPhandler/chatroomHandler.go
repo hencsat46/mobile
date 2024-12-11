@@ -73,7 +73,7 @@ func (h *ChatroomHandler) GetChatroom(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token"
-// @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
+// @Param chatroom body entities.CreateChatroom true "Chatroom Data"
 // @Success 201 {object} entities.Response "Chatroom created successfully"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /chatroom/create [post]
@@ -127,7 +127,7 @@ func (h *ChatroomHandler) CreateChatroom(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token"
-// @Param chatroom body entities.ChatroomDTO true "Chatroom Data"
+// @Param chatroom body entities.CreateChatroom true "Chatroom Data"
 // @Success 200 {object} entities.Response "Chatroom updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /chatroom/ [put]

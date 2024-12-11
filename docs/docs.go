@@ -50,7 +50,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.ChatroomDTO"
+                            "$ref": "#/definitions/entities.CreateChatroom"
                         }
                     }
                 ],
@@ -97,7 +97,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.ChatroomDTO"
+                            "$ref": "#/definitions/entities.CreateChatroom"
                         }
                     }
                 ],
@@ -332,7 +332,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.UserDTO"
+                            "$ref": "#/definitions/entities.User"
                         }
                     }
                 ],
@@ -371,15 +371,6 @@ const docTemplate = `{
                         "name": "Authorization",
                         "in": "header",
                         "required": true
-                    },
-                    {
-                        "description": "User Data",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/entities.UserDTO"
-                        }
                     }
                 ],
                 "responses": {
@@ -517,7 +508,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.UserDTO"
+                            "$ref": "#/definitions/entities.User"
                         }
                     }
                 ],
@@ -525,7 +516,7 @@ const docTemplate = `{
                     "201": {
                         "description": "User created successfully",
                         "schema": {
-                            "$ref": "#/definitions/entities.Response"
+                            "$ref": "#/definitions/entities.TokenResponse"
                         }
                     },
                     "400": {
@@ -563,7 +554,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.UserDTO"
+                            "$ref": "#/definitions/entities.UpdateEmail"
                         }
                     }
                 ],
@@ -655,7 +646,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entities.UserDTO"
+                            "$ref": "#/definitions/entities.UpdateUsername"
                         }
                     }
                 ],
@@ -675,7 +666,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/{GUID}/{cid}": {
+        "/ws/{GUID}/{cid}": {
             "get": {
                 "description": "Обновляет соединение до WebSocket'а для передачи сообщений.",
                 "tags": [
@@ -716,12 +707,9 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entities.ChatroomDTO": {
+        "entities.CreateChatroom": {
             "type": "object",
             "properties": {
-                "chatroom_id": {
-                    "type": "string"
-                },
                 "guid": {
                     "type": "string"
                 },
@@ -730,9 +718,6 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
-                },
-                "participants_limit": {
-                    "type": "integer"
                 }
             }
         },
@@ -741,6 +726,36 @@ const docTemplate = `{
             "properties": {
                 "content": {},
                 "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.TokenResponse": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "object",
+                    "properties": {
+                        "Token": {
+                            "type": "string"
+                        },
+                        "UserGuid": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.UpdateEmail": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "guid": {
                     "type": "string"
                 }
             }
@@ -759,15 +774,20 @@ const docTemplate = `{
                 }
             }
         },
-        "entities.UserDTO": {
+        "entities.UpdateUsername": {
             "type": "object",
             "properties": {
-                "email": {
-                    "type": "string"
-                },
                 "guid": {
                     "type": "string"
                 },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.User": {
+            "type": "object",
+            "properties": {
                 "password": {
                     "type": "string"
                 },

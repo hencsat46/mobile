@@ -1,22 +1,37 @@
 basePath: /
 definitions:
-  entities.ChatroomDTO:
+  entities.CreateChatroom:
     properties:
-      chatroom_id:
-        type: string
       guid:
         type: string
       is_private:
         type: boolean
       name:
         type: string
-      participants_limit:
-        type: integer
     type: object
   entities.Response:
     properties:
       content: {}
       error:
+        type: string
+    type: object
+  entities.TokenResponse:
+    properties:
+      content:
+        properties:
+          Token:
+            type: string
+          UserGuid:
+            type: string
+        type: object
+      error:
+        type: string
+    type: object
+  entities.UpdateEmail:
+    properties:
+      email:
+        type: string
+      guid:
         type: string
     type: object
   entities.UpdatePasswordDTO:
@@ -28,12 +43,15 @@ definitions:
       password:
         type: string
     type: object
-  entities.UserDTO:
+  entities.UpdateUsername:
     properties:
-      email:
-        type: string
       guid:
         type: string
+      username:
+        type: string
+    type: object
+  entities.User:
+    properties:
       password:
         type: string
       username:
@@ -63,32 +81,6 @@ info:
   title: Абоба
   version: "1.0"
 paths:
-  /{GUID}/{cid}:
-    get:
-      description: Обновляет соединение до WebSocket'а для передачи сообщений.
-      parameters:
-      - description: Уникальный идентификатор пользователя
-        in: path
-        name: GUID
-        required: true
-        type: string
-      - description: Уникальный идентификатор чата
-        in: path
-        name: cid
-        required: true
-        type: string
-      responses:
-        "101":
-          description: Соединение обновлено до WebSocket
-          schema:
-            type: string
-        "400":
-          description: Неверные параметры запроса
-          schema:
-            $ref: '#/definitions/entities.Response'
-      summary: WebSocket соединение для общения
-      tags:
-      - websocket
   /chatroom/:
     put:
       consumes:
@@ -105,7 +97,7 @@ paths:
         name: chatroom
         required: true
         schema:
-          $ref: '#/definitions/entities.ChatroomDTO'
+          $ref: '#/definitions/entities.CreateChatroom'
       produces:
       - application/json
       responses:
@@ -167,7 +159,7 @@ paths:
         name: chatroom
         required: true
         schema:
-          $ref: '#/definitions/entities.ChatroomDTO'
+          $ref: '#/definitions/entities.CreateChatroom'
       produces:
       - application/json
       responses:
@@ -286,7 +278,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/entities.UserDTO'
+          $ref: '#/definitions/entities.User'
       produces:
       - application/json
       responses:
@@ -311,12 +303,6 @@ paths:
         name: Authorization
         required: true
         type: string
-      - description: User Data
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/entities.UserDTO'
       produces:
       - application/json
       responses:
@@ -408,14 +394,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/entities.UserDTO'
+          $ref: '#/definitions/entities.User'
       produces:
       - application/json
       responses:
         "201":
           description: User created successfully
           schema:
-            $ref: '#/definitions/entities.Response'
+            $ref: '#/definitions/entities.TokenResponse'
         "400":
           description: Invalid input or user creation failed
           schema:
@@ -438,7 +424,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/entities.UserDTO'
+          $ref: '#/definitions/entities.UpdateEmail'
       produces:
       - application/json
       responses:
@@ -498,7 +484,7 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/entities.UserDTO'
+          $ref: '#/definitions/entities.UpdateUsername'
       produces:
       - application/json
       responses:
@@ -513,4 +499,30 @@ paths:
       summary: Обновление юзернейма пользователя
       tags:
       - users
+  /ws/{GUID}/{cid}:
+    get:
+      description: Обновляет соединение до WebSocket'а для передачи сообщений.
+      parameters:
+      - description: Уникальный идентификатор пользователя
+        in: path
+        name: GUID
+        required: true
+        type: string
+      - description: Уникальный идентификатор чата
+        in: path
+        name: cid
+        required: true
+        type: string
+      responses:
+        "101":
+          description: Соединение обновлено до WebSocket
+          schema:
+            type: string
+        "400":
+          description: Неверные параметры запроса
+          schema:
+            $ref: '#/definitions/entities.Response'
+      summary: WebSocket соединение для общения
+      tags:
+      - websocket
 swagger: "2.0"

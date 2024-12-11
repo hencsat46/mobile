@@ -8,11 +8,40 @@ type ChatroomDTO struct {
 	ParticipantsLimit int    `json:"participants_limit"`
 }
 
+type CreateChatroom struct {
+	Guid string `json:"guid"`
+	Name string `json:"name"`
+	IsPrivate bool `json:"is_private"`
+}
+
 type UserDTO struct {
 	GUID     string `json:"guid"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
+}
+
+type User struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type UpdateUsername struct {
+	GUID string `json:"guid"`
+	Username string `json:"username"`
+}
+
+type UpdateEmail struct {
+	GUID string `json:"guid"`
+	Email string `json:"email"`
+}
+
+type TokenResponse struct {
+	Error string
+	Content struct {
+		Token string `json:"Token"`
+		UserGuid string `json:"UserGuid"`
+	}
 }
 
 type UpdatePasswordDTO struct {

@@ -47,7 +47,7 @@ func New(userService IBusinessUser, jwt *jwt.JWT) *UserHandler {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param user body entities.UserDTO true "User Data"
+// @Param user body entities.User true "User Data"
 // @Success 201 {object} entities.Response "User created successfully"
 // @Failure 400 {object} entities.Response "Invalid input or user creation failed"
 // @Router /user/create [post]
@@ -100,8 +100,8 @@ func (h *UserHandler) CreateUser(c *fiber.Ctx) error {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param user body entities.UserDTO true "User Data"
-// @Success 201 {object} entities.Response "User created successfully"
+// @Param user body entities.User true "User Data"
+// @Success 201 {object} entities.TokenResponse "User created successfully"
 // @Failure 400 {object} entities.Response "Invalid input or user creation failed"
 // @Router /user/login [post]
 func (h *UserHandler) Login(c *fiber.Ctx) error {
@@ -139,7 +139,13 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(entities.Response{
 		Error:   "",
-		Content: token,
+		Content: struct {
+			Token string
+			UserGuid string
+		} {
+			Token: token,
+			UserGuid: guid,
+		},
 	})
 }
 
@@ -150,7 +156,7 @@ func (h *UserHandler) Login(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token"
-// @Param user body entities.UserDTO true "User Data"
+// @Param user body entities.UpdateUsername true "User Data"
 // @Success 201 {object} entities.Response "Username updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /user/updateUsername [put]
@@ -190,7 +196,7 @@ func (h *UserHandler) UpdateUsername(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token"
-// @Param user body entities.UserDTO true "User Data"
+// @Param user body entities.UpdateEmail true "User Data"
 // @Success 201 {object} entities.Response "Email updated successfully"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /user/updateEmail [put]
@@ -276,7 +282,6 @@ func (h UserHandler) UpdatePassword(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Bearer token"
-// @Param user body entities.UserDTO true "User Data"
 // @Success 201 {object} entities.Response "User deleted successfully"
 // @Failure 400 {object} entities.Response "Bad request"
 // @Router /user/delete/{GUID} [delete]

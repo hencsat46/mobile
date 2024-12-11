@@ -40,7 +40,7 @@ func New(wsBusiness IBusinessWS, hubmngr *hubmanager.HubManager, msgBusiness mes
 // @Param cid path string true "Уникальный идентификатор чата"
 // @Success 101 {string} string "Соединение обновлено до WebSocket"
 // @Failure 400 {object} entities.Response "Неверные параметры запроса"
-// @Router /{GUID}/{cid} [get]
+// @Router /ws/{GUID}/{cid} [get]
 func (h *WSHandler) HandleWS(c *websocket.Conn) {
 	guid := c.Params("GUID")
 	cid := c.Params("cid")
